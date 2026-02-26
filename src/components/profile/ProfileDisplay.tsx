@@ -4,34 +4,35 @@ import { Link } from "lucide-react";
 import { Button } from "../ui";
 
 type ProfileDisplayProps = {
-    user: User;
-    userPicture: UserPicture;
+    user: User | undefined;
+    /*userPicture: UserPicture;*/
 }
 
 /*Ici le component du profil avec la photo, le nom et le statut (premium ou basique)*/
 
 export function ProfileDisplay({
-    userPicture,
-    user
+    /*userPicture,*/
+    user,
 }: ProfileDisplayProps){
     return (
         <div>
             {/*Photo et bouton de modification*/}
             <p>Informations</p>
             <div>
-                <image href={(userPicture.filename)}></image>
+                {/*<image href={(userPicture.filename)}></image>
                 <Button>
                     <image></image>
-                </Button>
+                </Button>*/}
             </div>
             <h1>
-                {(user.name)}
+                {(user?.name)}
             </h1>
             <p>
-                {(user.email)}
+                {(user?.email)}
             </p>
             <span>
-                {(user.isPremium)}
+                {(user?.isPremium) /*Trouver comment faire une condition pour afficher Premium ou Basique*/
+                }
             </span>
         </div>
 

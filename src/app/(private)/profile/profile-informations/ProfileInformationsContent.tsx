@@ -1,14 +1,20 @@
 'use client';
 
 import { ProfileDisplay } from "@/components/profile/ProfileDisplay";
-import { Link } from "lucide-react";
+import { Link, User } from "lucide-react";
 import { ProfileSetting } from "@/components/ui/profile-setting";
 import { Button } from "@/components/ui";
+import { useUserContext } from "@/context/UserContext";
+import { getCurrentUser } from "@/lib/auth/server/getCurrentUser";
+import { userInfo } from "os";
+import { getUser } from "@/services/user";
 
 export default function ProfileInformationsContent(){
+    const user = useUserContext();
     return(
         <div>
-            <ProfileDisplay>
+            <ProfileDisplay
+            user={user.user}>
 
             </ProfileDisplay>
             {/*Liste des paramètres*/}
