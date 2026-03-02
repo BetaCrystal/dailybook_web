@@ -1,6 +1,7 @@
 import { User } from "@/types/user";
 import { Link } from "lucide-react";
 import { Button } from "../ui";
+import { ProfilePicture } from "./ProfilePicture";
 
 type ProfileDisplayProps = {
     user: User | undefined;
@@ -26,22 +27,24 @@ export function ProfileDisplay({
     premiumStat,
 }: ProfileDisplayProps){
     return (
-        <div>
+        <div className="flex flex-col items-center">
             {/*Photo et bouton de modification*/}
-            <p>Informations</p>
-            <div>
-                <image href={(user?.image)}></image>
-                {/*<Button>
-                    <img src={}/>
-                </Button> <- bouton de modification de la photo de profil*/}
+            <div className="mb-3 relative">
+                <ProfilePicture
+                user={user}
+                width={120}
+                height={120}></ProfilePicture>
+                <Button className="px-2.5 z-1 absolute right-0 bottom-0">
+                    <img src="/crayon.svg" className="w-4.5 h-auto"/>
+                </Button>
             </div>
-            <h1>
+            <h1 className="text-muted-foreground text-lg">
                 {(user?.name)}
             </h1>
-            <p>
+            <p className="text-muted-foreground mb-1">
                 {(user?.email)}
             </p>
-            <span>
+            <span className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full transition-all bg-primary shadow-xs h-fit px-4 py-1 text-sm font-medium text-white w-fit">
                 {(user?.isPremium)}
                 {(premiumStat)}
             </span>

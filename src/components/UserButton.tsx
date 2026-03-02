@@ -16,6 +16,7 @@ import {
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { LogOut, Settings, User } from 'lucide-react';
+import Link from 'next/link'
 
 export default function UserButton() {
 
@@ -42,14 +43,20 @@ export default function UserButton() {
 
                                 <DropdownMenuSeparator />
 
+                                <Link href="/profile/profile-informations">
                                 <DropdownMenuItem>
+
                                         <User className="mr-2 h-4 w-4" />
                                         <span>Profil</span>
+
                                 </DropdownMenuItem>
+                                </Link>
+                                <Link href="/profile/profile-settings">
                                 <DropdownMenuItem>
                                         <Settings className="mr-2 h-4 w-4" />
                                         <span>Paramètres</span>
                                 </DropdownMenuItem>
+                                </Link>
 
                                 <DropdownMenuSeparator />
 
