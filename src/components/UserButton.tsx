@@ -15,6 +15,8 @@ import {
         DropdownMenuSubTrigger,
         DropdownMenuSubContent,
         DropdownMenuSub,
+        DropdownMenuPortal,
+        DropdownMenuGroup,
 } from '@/components/ui/dropdown-menu';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
@@ -26,8 +28,7 @@ import { useUserContext } from "@/context/UserContext";
 
 export default function UserButton() {
     const pathname = usePathname();
-        const user = useUserContext();
-
+    const user = useUserContext();
         const handleLogout = async () => {
                 try {
                         await signOut(auth);
@@ -54,31 +55,37 @@ export default function UserButton() {
                                 <DropdownMenuItem>
                                     <DropdownMenuSub>
                                         <DropdownMenuSubTrigger className={`{'text-sm font-medium text-primary'}`}><User className="mr-2 h-4 w-4" />Profil</DropdownMenuSubTrigger>
+                                        <DropdownMenuPortal>
                                         <DropdownMenuSubContent className="z-50">
+                                            <DropdownMenuGroup>
                                             <DropdownMenuItem className="grid gap-2 w-48">
                                                 <ProfileDisplay
                                                 user={user.user}
                                                 premiumStat={StatusText(user.user?.isPremium)}>
                                                 </ProfileDisplay>
+                                                </DropdownMenuItem>
+                                                 <DropdownMenuSeparator />
+                                                <DropdownMenuItem>
                                                     <Link
                                                         href="/performances/objectives"
                                                         className={`text-sm rounded-sm px-2 py-1.5 hover:bg-accent hover:text-primary ${pathname === '/performances/objectifs' && 'bg-accent text-primary'}`}
-                                                    >
-                                                    <DropdownMenuItem>Changer le nom</DropdownMenuItem>
-                                                    </Link>
+                                                    >Changer le nom</Link>
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem>
                                                     <Link
                                                         href="/performances/statistiques"
                                                         className={`text-sm rounded-sm px-2 py-1.5 hover:bg-accent hover:text-primary ${pathname === '/performances/statistiques' && 'bg-accent text-primary'}`}
-                                                    >
-                                                    <DropdownMenuItem>Changer le mot de passe</DropdownMenuItem>
-                                                    </Link>
-                                            </DropdownMenuItem>
+                                                    >Changer le mot de passe</Link>
+                                                </DropdownMenuItem>
+                                            </DropdownMenuGroup>
                                         </DropdownMenuSubContent>
+                                        </DropdownMenuPortal>
                                     </DropdownMenuSub>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <DropdownMenuSub>
                                         <DropdownMenuSubTrigger className={`{'text-sm font-medium text-primary'}`}><Settings className="mr-2 h-4 w-4" />Paramètres</DropdownMenuSubTrigger>
+                                        <DropdownMenuPortal>
                                             <DropdownMenuSubContent className="z-50">
                                                 <DropdownMenuItem className="grid gap-2 w-48">
                                                     <Link
@@ -107,6 +114,7 @@ export default function UserButton() {
                                                     </Link>
                                             </DropdownMenuItem>
                                         </DropdownMenuSubContent>
+                                        </DropdownMenuPortal>
                                     </DropdownMenuSub>
                                 </DropdownMenuItem>
 
