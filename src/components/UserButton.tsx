@@ -1,34 +1,46 @@
 'use client';
 
+import { useState, useRef, useEffect } from 'react';
 import {
         Avatar,
         AvatarFallback,
         AvatarImage,
 } from '@/components/ui/avatar';
 import {
-        DropdownMenu,
-        DropdownMenuContent,
-        DropdownMenuItem,
-        DropdownMenuLabel,
-        DropdownMenuSeparator,
-        DropdownMenuTrigger,
-        DropdownMenuSubTrigger,
-        DropdownMenuSubContent,
-        DropdownMenuSub,
-        DropdownMenuPortal,
-        DropdownMenuGroup,
-} from '@/components/ui/dropdown-menu';
+        Popover,
+        PopoverContent,
+        PopoverTrigger,
+} from '@/components/ui/popover';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { LogOut, Settings, User } from 'lucide-react';
-import { usePathname } from 'next/navigation'
-import Link from 'next/link'
+import { LogOut, Settings, User, ChevronRight, ArrowLeft, Moon, Trash2, LifeBuoy, UserCog, KeyRound, PenLine } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { ProfileDisplay, StatusText } from "@/components/profile/ProfileDisplay";
 import { useUserContext } from "@/context/UserContext";
 
+type Panel = 'main' | 'profil' | 'settings';
+
 export default function UserButton() {
-    const pathname = usePathname();
-    const user = useUserContext();
+        const pathname = usePathname();
+        const user = useUserContext();
+        const [open, setOpen] = useState(false);
+        const [activePanel, setActivePanel] = useState<Panel>('main');
+        const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('left');
+        const containerRef = useRef<HTMLDivElement>(null);
+
+        // Reset to main panel when popover closes
+        useEffect(() => {
+                if (!open) {
+                        // Small delay so the animation isn't visible when closing
+                        const timer = setTimeout(() => {
+                                setActivePanel('main');
+                                setSlideDirection('left');
+                        }, 200);
+                        return () => clearTimeout(timer);
+                }
+        }, [open]);
+
         const handleLogout = async () => {
                 try {
                         await signOut(auth);
@@ -39,93 +51,187 @@ export default function UserButton() {
                 }
         };
 
+        const navigateTo = (panel: Panel) => {
+                setSlideDirection('left');
+                setActivePanel(panel);
+        };
+
+        const navigateBack = () => {
+                setSlideDirection('right');
+                setActivePanel('main');
+        };
+
         return (
-                <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
+                <Popover open={open} onOpenChange={setOpen}>
+                        <PopoverTrigger asChild>
                                 <Avatar className="h-8 w-8 cursor-pointer">
                                         <AvatarImage src="/user.png" alt="Utilisateur" />
                                         <AvatarFallback>U</AvatarFallback>
                                 </Avatar>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-48">
-                                <DropdownMenuLabel>Mon compte</DropdownMenuLabel>
+                        </PopoverTrigger>
+                        <PopoverContent
+                                align="end"
+                                className="w-72 p-0 overflow-hidden"
+                        >
+                                <div ref={containerRef} className="relative">
+                                        {/* ===== MAIN PANEL ===== */}
+                                        <div
+                                                className={`transition-all duration-300 ease-in-out ${
+                                                        activePanel === 'main'
+                                                                ? 'translate-x-0 opacity-100'
+                                                                : slideDirection === 'left'
+                                                                        ? '-translate-x-full opacity-0 absolute inset-0 pointer-events-none'
+                                                                        : 'translate-x-full opacity-0 absolute inset-0 pointer-events-none'
+                                                }`}
+                                        >
+                                                <div className="px-4 py-3 border-b">
+                                                        <p className="text-sm font-semibold">Mon compte</p>
+                                                </div>
 
-                                <DropdownMenuSeparator />
+                                                <div className="py-1">
+                                                        {/* Profil */}
+                                                        <button
+                                                                onClick={() => navigateTo('profil')}
+                                                                className="flex items-center justify-between w-full px-4 py-2.5 text-sm hover:bg-accent transition-colors cursor-pointer"
+                                                        >
+                                                                <span className="flex items-center gap-3">
+                                                                        <User className="h-4 w-4" />
+                                                                        Profil
+                                                                </span>
+                                                                <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                                                        </button>
 
-                                <DropdownMenuItem>
-                                    <DropdownMenuSub>
-                                        <DropdownMenuSubTrigger className={`{'text-sm font-medium text-primary'}`}><User className="mr-2 h-4 w-4" />Profil</DropdownMenuSubTrigger>
-                                        <DropdownMenuPortal>
-                                        <DropdownMenuSubContent className="z-50">
-                                            <DropdownMenuGroup>
-                                            <DropdownMenuItem className="grid gap-2 w-48">
-                                                <ProfileDisplay
-                                                user={user.user}
-                                                premiumStat={StatusText(user.user?.isPremium)}>
-                                                </ProfileDisplay>
-                                                </DropdownMenuItem>
-                                                 <DropdownMenuSeparator />
-                                                <DropdownMenuItem>
-                                                    <Link
-                                                        href="/performances/objectives"
-                                                        className={`text-sm rounded-sm px-2 py-1.5 hover:bg-accent hover:text-primary ${pathname === '/performances/objectifs' && 'bg-accent text-primary'}`}
-                                                    >Changer le nom</Link>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem>
-                                                    <Link
-                                                        href="/performances/statistiques"
-                                                        className={`text-sm rounded-sm px-2 py-1.5 hover:bg-accent hover:text-primary ${pathname === '/performances/statistiques' && 'bg-accent text-primary'}`}
-                                                    >Changer le mot de passe</Link>
-                                                </DropdownMenuItem>
-                                            </DropdownMenuGroup>
-                                        </DropdownMenuSubContent>
-                                        </DropdownMenuPortal>
-                                    </DropdownMenuSub>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <DropdownMenuSub>
-                                        <DropdownMenuSubTrigger className={`{'text-sm font-medium text-primary'}`}><Settings className="mr-2 h-4 w-4" />Paramètres</DropdownMenuSubTrigger>
-                                        <DropdownMenuPortal>
-                                            <DropdownMenuSubContent className="z-50">
-                                                <DropdownMenuItem className="grid gap-2 w-48">
-                                                    <Link
-                                                        href="/performances/objectives"
-                                                        className={`text-sm rounded-sm px-2 py-1.5 hover:bg-accent hover:text-primary ${pathname === '/performances/objectifs' && 'bg-accent text-primary'}`}
-                                                    >
-                                                    <DropdownMenuItem>Gérer mon compte</DropdownMenuItem>
-                                                    </Link>
-                                                    <Link
-                                                        href="/performances/statistiques"
-                                                        className={`text-sm rounded-sm px-2 py-1.5 hover:bg-accent hover:text-primary ${pathname === '/performances/statistiques' && 'bg-accent text-primary'}`}
-                                                    >
-                                                    <DropdownMenuItem>Support utilisateurs</DropdownMenuItem>
-                                                    </Link>
-                                                    <Link
-                                                        href="/performances/statistiques"
-                                                        className={`text-sm rounded-sm px-2 py-1.5 hover:bg-accent hover:text-primary ${pathname === '/performances/statistiques' && 'bg-accent text-primary'}`}
-                                                    >
-                                                    <DropdownMenuItem>Passer en mode sombre</DropdownMenuItem>
-                                                    </Link>
-                                                    <Link
-                                                        href="/performances/statistiques"
-                                                        className={`text-sm rounded-sm px-2 py-1.5 hover:bg-accent hover:text-primary ${pathname === '/performances/statistiques' && 'bg-accent text-primary'}`}
-                                                    >
-                                                    <DropdownMenuItem>Supprimer mon compte</DropdownMenuItem>
-                                                    </Link>
-                                            </DropdownMenuItem>
-                                        </DropdownMenuSubContent>
-                                        </DropdownMenuPortal>
-                                    </DropdownMenuSub>
-                                </DropdownMenuItem>
+                                                        {/* Paramètres */}
+                                                        <button
+                                                                onClick={() => navigateTo('settings')}
+                                                                className="flex items-center justify-between w-full px-4 py-2.5 text-sm hover:bg-accent transition-colors cursor-pointer"
+                                                        >
+                                                                <span className="flex items-center gap-3">
+                                                                        <Settings className="h-4 w-4" />
+                                                                        Paramètres
+                                                                </span>
+                                                                <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                                                        </button>
+                                                </div>
 
+                                                <div className="border-t py-1">
+                                                        <button
+                                                                onClick={handleLogout}
+                                                                className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-destructive hover:bg-accent transition-colors cursor-pointer"
+                                                        >
+                                                                <LogOut className="h-4 w-4" />
+                                                                Se déconnecter
+                                                        </button>
+                                                </div>
+                                        </div>
 
-                                <DropdownMenuSeparator />
+                                        {/* ===== PROFIL PANEL ===== */}
+                                        <div
+                                                className={`transition-all duration-300 ease-in-out ${
+                                                        activePanel === 'profil'
+                                                                ? 'translate-x-0 opacity-100'
+                                                                : slideDirection === 'right'
+                                                                        ? 'translate-x-full opacity-0 absolute inset-0 pointer-events-none'
+                                                                        : '-translate-x-full opacity-0 absolute inset-0 pointer-events-none'
+                                                }`}
+                                        >
+                                                <div className="flex items-center gap-3 px-4 py-3 border-b">
+                                                        <button
+                                                                onClick={navigateBack}
+                                                                className="p-1 rounded-full hover:bg-accent transition-colors cursor-pointer"
+                                                        >
+                                                                <ArrowLeft className="h-4 w-4" />
+                                                        </button>
+                                                        <p className="text-sm font-semibold">Profil</p>
+                                                </div>
 
-                                <DropdownMenuItem onClick={handleLogout} className="text-destructive">
-                                        <LogOut className="mr-2 h-4 w-4" />
-                                        <span>Se déconnecter</span>
-                                </DropdownMenuItem>
-                        </DropdownMenuContent>
-                </DropdownMenu>
-        )
+                                                <div className="px-4 py-4">
+                                                        <ProfileDisplay
+                                                                user={user.user}
+                                                                premiumStat={StatusText(user.user?.isPremium)}
+                                                        />
+                                                </div>
+
+                                                <div className="border-t py-1">
+                                                        <Link
+                                                                href="/profile"
+                                                                onClick={() => setOpen(false)}
+                                                                className={`flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-accent transition-colors ${
+                                                                        pathname === '/profile' ? 'bg-accent text-primary' : ''
+                                                                }`}
+                                                        >
+                                                                <PenLine className="h-4 w-4" />
+                                                                Changer le nom
+                                                        </Link>
+                                                        <Link
+                                                                href="/profile/password"
+                                                                onClick={() => setOpen(false)}
+                                                                className={`flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-accent transition-colors ${
+                                                                        pathname === '/profile/password' ? 'bg-accent text-primary' : ''
+                                                                }`}
+                                                        >
+                                                                <KeyRound className="h-4 w-4" />
+                                                                Changer le mot de passe
+                                                        </Link>
+                                                </div>
+                                        </div>
+
+                                        {/* ===== SETTINGS PANEL ===== */}
+                                        <div
+                                                className={`transition-all duration-300 ease-in-out ${
+                                                        activePanel === 'settings'
+                                                                ? 'translate-x-0 opacity-100'
+                                                                : slideDirection === 'right'
+                                                                        ? 'translate-x-full opacity-0 absolute inset-0 pointer-events-none'
+                                                                        : '-translate-x-full opacity-0 absolute inset-0 pointer-events-none'
+                                                }`}
+                                        >
+                                                <div className="flex items-center gap-3 px-4 py-3 border-b">
+                                                        <button
+                                                                onClick={navigateBack}
+                                                                className="p-1 rounded-full hover:bg-accent transition-colors cursor-pointer"
+                                                        >
+                                                                <ArrowLeft className="h-4 w-4" />
+                                                        </button>
+                                                        <p className="text-sm font-semibold">Paramètres</p>
+                                                </div>
+
+                                                <div className="py-1">
+                                                        <Link
+                                                                href="/profil/account"
+                                                                onClick={() => setOpen(false)}
+                                                                className="flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-accent transition-colors"
+                                                        >
+                                                                <UserCog className="h-4 w-4" />
+                                                                Gérer mon compte
+                                                        </Link>
+                                                        <Link
+                                                                href="/profil/support"
+                                                                onClick={() => setOpen(false)}
+                                                                className="flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-accent transition-colors"
+                                                        >
+                                                                <LifeBuoy className="h-4 w-4" />
+                                                                Support utilisateurs
+                                                        </Link>
+                                                        <button
+                                                                className="flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-accent transition-colors cursor-pointer"
+                                                        >
+                                                                <Moon className="h-4 w-4" />
+                                                                Passer en mode sombre
+                                                        </button>
+
+                                                        <div className="border-t my-1" />
+
+                                                        <button
+                                                                className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-destructive hover:bg-accent transition-colors cursor-pointer"
+                                                        >
+                                                                <Trash2 className="h-4 w-4" />
+                                                                Supprimer mon compte
+                                                        </button>
+                                                </div>
+                                        </div>
+                                </div>
+                        </PopoverContent>
+                </Popover>
+        );
 }
