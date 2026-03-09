@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import {
         Avatar,
         AvatarFallback,
@@ -18,6 +18,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { ProfileDisplay, StatusText } from "@/components/profile/ProfileDisplay";
 import { useUserContext } from "@/context/UserContext";
+import { useProfileNameFormDrawer } from '@/context/ProfileNameFormDrawerContext';
 
 type Panel = 'main' | 'profil' | 'settings';
 
@@ -28,6 +29,8 @@ export default function UserButton() {
         const [activePanel, setActivePanel] = useState<Panel>('main');
         const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('left');
         const containerRef = useRef<HTMLDivElement>(null);
+
+        const { openNameDrawer: openNameDrawerForm } = useProfileNameFormDrawer();
 
         // Reset to main panel when popover closes
         useEffect(() => {
@@ -59,6 +62,16 @@ export default function UserButton() {
         const navigateBack = () => {
                 setSlideDirection('right');
                 setActivePanel('main');
+        };
+
+        const selectedUser = useMemo(
+            () => (animals && selectedId !== undefined ? animals.find((a) => a.id === selectedId) : undefined),
+            [selectedId, animals]
+          );
+
+        // Ouvre le drawer pour édition via le context
+        const handleEdit = () => {
+                openNameDrawerForm({ initialUser: selectedUser });
         };
 
         return (
