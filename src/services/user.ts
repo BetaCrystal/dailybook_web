@@ -26,6 +26,11 @@ export const addUser = async (user: User) => {
     return res.data;
 };
 
+export const updateUser = async (id: string, user: Partial<User>) => {
+    const res = await apiClient.put(`/user/${id}`, user);
+    return res.data;
+};
+
 export const deleteUser = async (id: string) => {
     await apiClient.delete(`/user/${id}`);
 };

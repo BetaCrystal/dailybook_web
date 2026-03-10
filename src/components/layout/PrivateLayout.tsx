@@ -14,6 +14,8 @@ import { AnimalDeleteProvider } from "@/context/AnimalDeleteContext";
 import { ObjectiveFormDrawerWrapper } from "../objectives/ObjectiveFormDrawerWrapper";
 import { ObjectiveFormDrawerProvider } from "@/context/ObjectiveFormDrawerContext";
 import { ObjectiveDeleteProvider } from "@/context/ObjectiveDeleteContext";
+import { ProfileNameFormDrawerProvider } from "@/context/ProfileNameFormDrawerContext";
+import { ProfileNameFormDrawerWrapper } from "../profile/ProfileNameDrawerWrapper";
 
 export function PrivateLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -29,19 +31,22 @@ export function PrivateLayout({ children }: { children: React.ReactNode }) {
             <EventDrawerProvider>
               <ObjectiveFormDrawerProvider>
                 <ObjectiveDeleteProvider>
-                  <ResponsiveAppBar />
-                  {children}
-                  <EventFormDrawerWrapper />
-                  <EventDrawerWrapper />
-                  <AnimalFormDrawerWrapper />
-                  <ObjectiveFormDrawerWrapper />
-                  {/* Affiche le FAB sauf sur certaines pages */}
-                  {!hideFabOnPaths.some((path) => pathname.startsWith(path)) && (
-                    <FloatingActions
-                      currentPath={pathname}
-                      hideOnPaths={hideFabOnPaths}
-                    />
-                  )}
+                  <ProfileNameFormDrawerProvider>
+                    <ResponsiveAppBar />
+                    {children}
+                    <EventFormDrawerWrapper />
+                    <EventDrawerWrapper />
+                    <AnimalFormDrawerWrapper />
+                    <ObjectiveFormDrawerWrapper />
+                    <ProfileNameFormDrawerWrapper />
+                    {/* Affiche le FAB sauf sur certaines pages */}
+                    {!hideFabOnPaths.some((path) => pathname.startsWith(path)) && (
+                      <FloatingActions
+                        currentPath={pathname}
+                        hideOnPaths={hideFabOnPaths}
+                      />
+                    )}
+                  </ProfileNameFormDrawerProvider>
                 </ObjectiveDeleteProvider>
               </ObjectiveFormDrawerProvider>
             </EventDrawerProvider>

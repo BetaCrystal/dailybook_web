@@ -1,13 +1,9 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { Textarea } from "../ui/textarea";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { User } from "@/types/user";
-import { toast } from "sonner";
 import { X } from "lucide-react";
-import { deleteFromStorage } from "@/services/storage";
 import { useProfileNameForm } from "@/hooks/useProfileNameForm";
 
 type ProfileNameFormDrawerProps = {
@@ -20,12 +16,9 @@ type ProfileNameFormDrawerProps = {
 export function ProfileNameFormDrawer({ open, onClose, onSubmit, isSubmitting = false, initialUser }: ProfileNameFormDrawerProps & { initialUser?: Partial<User> }){
     const {
         values,
-        errors,
         handleChange,
-        handleTextareaChange,
         handleSubmit,
         resetForm,
-        setValues,
     } = useProfileNameForm(initialUser);
 
     const inputRef = useRef<HTMLInputElement>(null);
@@ -59,6 +52,7 @@ export function ProfileNameFormDrawer({ open, onClose, onSubmit, isSubmitting = 
                             <div>
                             <label className="block text-sm font-medium mb-1">Nouveau nom du compte</label>
                             <Input
+                                type="text"
                                 name="name"
                                 value={values.name || ""}
                                 onChange={handleChange}

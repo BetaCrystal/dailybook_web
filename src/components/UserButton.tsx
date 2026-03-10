@@ -18,7 +18,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { ProfileDisplay, StatusText } from "@/components/profile/ProfileDisplay";
 import { useUserContext } from "@/context/UserContext";
-/*import { useProfileNameFormDrawer } from '@/context/ProfileNameFormDrawerContext';*/
+import { useProfileNameFormDrawer } from '@/context/ProfileNameFormDrawerContext';
 
 type Panel = 'main' | 'profil' | 'settings';
 
@@ -30,7 +30,7 @@ export default function UserButton() {
         const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('left');
         const containerRef = useRef<HTMLDivElement>(null);
 
-        /*const { openNameDrawer: openNameDrawerForm } = useProfileNameFormDrawer();*/
+        const { openNameDrawer: openNameDrawerForm } = useProfileNameFormDrawer();
 
         // Reset to main panel when popover closes
         useEffect(() => {
@@ -65,9 +65,9 @@ export default function UserButton() {
         };
 
         // Ouvre le drawer pour édition via le context
-        /*const handleEditName = () => {
+        const handleEditName = () => {
                 openNameDrawerForm({ initialUser: user.user });
-        };*/
+        };
 
         return (
                 <Popover open={open} onOpenChange={setOpen}>
@@ -162,14 +162,14 @@ export default function UserButton() {
 
                                                 <div className="border-t py-1">
 
-                                                        {/*<button
+                                                        <button
                                                                 onClick={handleEditName}
                                                                 className={`flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-accent transition-colors bg-accent text-primary
                                                                 `}
                                                         >
                                                                 <PenLine className="h-4 w-4" />
                                                                 Changer le nom
-                                                        </button>*/}
+                                                        </button>
 
                                                         <Link
                                                                 href="/profile/password"

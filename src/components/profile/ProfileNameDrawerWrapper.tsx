@@ -6,18 +6,18 @@ import * as Sentry from "@sentry/react";
 import { User } from "@/types/user";
 
 export function ProfileNameFormDrawerWrapper() {
-  const { drawer, closeDrawer } = useProfileNameFormDrawer();
+  const { drawer, closeNameDrawer } = useProfileNameFormDrawer();
   const { updateUser, refresh } = useUserContext();
 
   async function handleSubmit(data: Partial<User>) {
     try {
       // Création ou modification
-      if (drawer.initialUser?.id) {
-        await updateUser(drawer.initialUser.id, { ...data});
+      if (drawer.initialUser?.uid) {
+        await updateUser(drawer.initialUser?.uid, { ...data});
         toast.success("Nom d'utilisateur modifié avec succès.");
       }
       refresh();
-      closeDrawer();
+      closeNameDrawer();
     } catch (e) {
       Sentry.captureException(e, {
         extra: { data, isEdit: drawer.isEdit },
@@ -30,7 +30,7 @@ export function ProfileNameFormDrawerWrapper() {
   return (
     <ProfileNameFormDrawer
       open={drawer.open}
-      onClose={closeDrawer}
+      onClose={closeNameDrawer}
       onSubmit={handleSubmit}
       isSubmitting={false}
       initialUser={drawer.initialUser}
