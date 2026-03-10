@@ -33,6 +33,6 @@ export function ProfileNameFormDrawerProvider({ children }: { children: ReactNod
 
 export function useProfileNameFormDrawer() {
   const ctx = useContext(ProfileNameFormDrawerContext);
-  if (!ctx) throw new Error("useProfileNameFormDrawer must be used within AnimalFormDrawerProvider");
+  if (!ctx) throw new Error("useProfileNameFormDrawer must be used within ProfileNameFormDrawerProvider");
   return ctx;
 }

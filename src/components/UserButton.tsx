@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
         Avatar,
         AvatarFallback,
@@ -18,7 +18,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { ProfileDisplay, StatusText } from "@/components/profile/ProfileDisplay";
 import { useUserContext } from "@/context/UserContext";
-import { useProfileNameFormDrawer } from '@/context/ProfileNameFormDrawerContext';
+/*import { useProfileNameFormDrawer } from '@/context/ProfileNameFormDrawerContext';*/
 
 type Panel = 'main' | 'profil' | 'settings';
 
@@ -30,7 +30,7 @@ export default function UserButton() {
         const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('left');
         const containerRef = useRef<HTMLDivElement>(null);
 
-        const { openNameDrawer: openNameDrawerForm } = useProfileNameFormDrawer();
+        /*const { openNameDrawer: openNameDrawerForm } = useProfileNameFormDrawer();*/
 
         // Reset to main panel when popover closes
         useEffect(() => {
@@ -64,15 +64,10 @@ export default function UserButton() {
                 setActivePanel('main');
         };
 
-        const selectedUser = useMemo(
-            () => (animals && selectedId !== undefined ? animals.find((a) => a.id === selectedId) : undefined),
-            [selectedId, animals]
-          );
-
         // Ouvre le drawer pour édition via le context
-        const handleEdit = () => {
-                openNameDrawerForm({ initialUser: selectedUser });
-        };
+        /*const handleEditName = () => {
+                openNameDrawerForm({ initialUser: user.user });
+        };*/
 
         return (
                 <Popover open={open} onOpenChange={setOpen}>
@@ -166,16 +161,16 @@ export default function UserButton() {
                                                 </div>
 
                                                 <div className="border-t py-1">
-                                                        <Link
-                                                                href="/profile"
-                                                                onClick={() => setOpen(false)}
-                                                                className={`flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-accent transition-colors ${
-                                                                        pathname === '/profile' ? 'bg-accent text-primary' : ''
-                                                                }`}
+
+                                                        {/*<button
+                                                                onClick={handleEditName}
+                                                                className={`flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-accent transition-colors bg-accent text-primary
+                                                                `}
                                                         >
                                                                 <PenLine className="h-4 w-4" />
                                                                 Changer le nom
-                                                        </Link>
+                                                        </button>*/}
+
                                                         <Link
                                                                 href="/profile/password"
                                                                 onClick={() => setOpen(false)}
