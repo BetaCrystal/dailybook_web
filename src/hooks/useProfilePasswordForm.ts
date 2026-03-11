@@ -26,7 +26,7 @@ export function useProfilePasswordForm(initial: Partial<User> = {}) {
 
   const validate = (vals: Partial<User>) => {
     const errs: Record<string, string> = {};
-    if (!vals.name) errs.name = "Le mot de passe est requis";
+    if (!vals.expotoken) errs.expotoken = "Le mot de passe est requis";
     return errs;
   };
 

@@ -9,7 +9,7 @@ import { useProfileNameForm } from "@/hooks/useProfileNameForm";
 type ProfileNameFormDrawerProps = {
     open: boolean;
     onClose: () => void;
-    onSubmit: (data: Partial<User>, imageFile?: File) => void;
+    onSubmit: (data: Partial<User>) => void;
     isSubmitting?: boolean;
 };
 
