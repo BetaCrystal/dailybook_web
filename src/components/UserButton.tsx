@@ -20,6 +20,7 @@ import { ProfileDisplay, StatusText } from "@/components/profile/ProfileDisplay"
 import { useUserContext } from "@/context/UserContext";
 import { useProfileNameFormDrawer } from '@/context/ProfileNameFormDrawerContext';
 import { useProfilePasswordFormDrawer } from '@/context/ProfilePasswordFormDrawerContext';
+import ModeToggleUserButton from '@/components/ModeToggleUserButton';
 
 type Panel = 'main' | 'profil' | 'settings';
 
@@ -224,12 +225,11 @@ export default function UserButton() {
                                                                 <LifeBuoy className="h-4 w-4" />
                                                                 Support utilisateurs
                                                         </Link>
-                                                        <button
+                                                        <ModeToggleUserButton
                                                                 className="flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-accent transition-colors cursor-pointer"
                                                         >
-                                                                <Moon className="h-4 w-4" />
                                                                 Passer en mode sombre
-                                                        </button>
+                                                        </ModeToggleUserButton>
 
                                                         <div className="border-t my-1" />
 
