@@ -18,6 +18,8 @@ import { ProfileNameFormDrawerProvider } from "@/context/ProfileNameFormDrawerCo
 import { ProfileNameFormDrawerWrapper } from "../profile/ProfileNameDrawerWrapper";
 import { ProfilePasswordFormDrawerProvider } from "@/context/ProfilePasswordFormDrawerContext";
 import { ProfilePasswordFormDrawerWrapper } from "../profile/ProfilePasswordDrawerWrapper";
+import { ProfilePictureFormDrawerProvider } from "@/context/ProfilePictureFormDrawerContext";
+import { ProfilePictureFormDrawerWrapper } from "../profile/ProfilePictureDrawerWrapper";
 
 export function PrivateLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -35,21 +37,24 @@ export function PrivateLayout({ children }: { children: React.ReactNode }) {
                 <ObjectiveDeleteProvider>
                   <ProfileNameFormDrawerProvider>
                     <ProfilePasswordFormDrawerProvider>
-                      <ResponsiveAppBar />
-                      {children}
-                      <EventFormDrawerWrapper />
-                      <EventDrawerWrapper />
-                      <AnimalFormDrawerWrapper />
-                      <ObjectiveFormDrawerWrapper />
-                      <ProfileNameFormDrawerWrapper />
-                      <ProfilePasswordFormDrawerWrapper />
-                      {/* Affiche le FAB sauf sur certaines pages */}
-                      {!hideFabOnPaths.some((path) => pathname.startsWith(path)) && (
-                        <FloatingActions
-                          currentPath={pathname}
-                          hideOnPaths={hideFabOnPaths}
-                        />
-                      )}
+                      <ProfilePictureFormDrawerProvider>
+                        <ResponsiveAppBar />
+                        {children}
+                        <EventFormDrawerWrapper />
+                        <EventDrawerWrapper />
+                        <AnimalFormDrawerWrapper />
+                        <ObjectiveFormDrawerWrapper />
+                        <ProfileNameFormDrawerWrapper />
+                        <ProfilePasswordFormDrawerWrapper />
+                        <ProfilePictureFormDrawerWrapper />
+                        {/* Affiche le FAB sauf sur certaines pages */}
+                        {!hideFabOnPaths.some((path) => pathname.startsWith(path)) && (
+                          <FloatingActions
+                            currentPath={pathname}
+                            hideOnPaths={hideFabOnPaths}
+                          />
+                        )}
+                      </ProfilePictureFormDrawerProvider>
                     </ProfilePasswordFormDrawerProvider>
                   </ProfileNameFormDrawerProvider>
                 </ObjectiveDeleteProvider>

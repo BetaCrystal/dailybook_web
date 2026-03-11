@@ -2,6 +2,7 @@ import { User } from "@/types/user";
 import { Link } from "lucide-react";
 import { Button } from "../ui";
 import { ProfilePicture } from "./ProfilePicture";
+import { useProfilePictureFormDrawer } from '@/context/ProfilePictureFormDrawerContext';
 
 type ProfileDisplayProps = {
     user: User | undefined;
@@ -26,6 +27,12 @@ export function ProfileDisplay({
     user,
     premiumStat,
 }: ProfileDisplayProps){
+        const { openPictureDrawer: openPictureDrawerForm } = useProfilePictureFormDrawer();
+
+        const handleEditPicture = () => {
+                openPictureDrawerForm({ initialUser: user });
+        };
+
     return (
         <div className="flex flex-col items-center">
             {/*Photo et bouton de modification*/}
@@ -34,7 +41,7 @@ export function ProfileDisplay({
                 user={user}
                 width={120}
                 height={120}></ProfilePicture>
-                <Button className="px-2.5 z-1 absolute right-0 bottom-0">
+                <Button className="px-2.5 z-1 absolute right-0 bottom-0" onClick={handleEditPicture}>
                     <img src="/crayon.svg" className="w-4.5 h-auto"/>
                 </Button>
             </div>

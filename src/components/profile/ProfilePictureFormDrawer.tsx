@@ -4,22 +4,22 @@ import { Input } from "../ui/input";
 import { useRef } from "react";
 import { User } from "@/types/user";
 import { X } from "lucide-react";
-import { useProfileNameForm } from "@/hooks/useProfileNameForm";
+import { useProfilePictureForm } from "@/hooks/useProfilePictureForm";
 
-type ProfileNameFormDrawerProps = {
+type ProfilePictureFormDrawerProps = {
     open: boolean;
     onClose: () => void;
     onSubmit: (data: Partial<User>, imageFile?: File) => void;
     isSubmitting?: boolean;
 };
 
-export function ProfileNameFormDrawer({ open, onClose, onSubmit, isSubmitting = false, initialUser }: ProfileNameFormDrawerProps & { initialUser?: Partial<User> }){
+export function ProfilePictureFormDrawer({ open, onClose, onSubmit, isSubmitting = false, initialUser }: ProfilePictureFormDrawerProps & { initialUser?: Partial<User> }){
     const {
         values,
         handleChange,
         handleSubmit,
         resetForm,
-    } = useProfileNameForm(initialUser);
+    } = useProfilePictureForm(initialUser);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -33,7 +33,7 @@ export function ProfileNameFormDrawer({ open, onClose, onSubmit, isSubmitting = 
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent showCloseButton={false} className="max-w-[1200px] w-[90vw] h-[90vh] rounded-2xl p-0 overflow-hidden flex flex-col">
                 <DialogHeader className="px-6 py-4 flex flex-row items-center justify-between">
-                    <DialogTitle>Modifier le nom du compte</DialogTitle>
+                    <DialogTitle>Modifier la photo de profil</DialogTitle>
                     <Button
                         onClick={onClose}
                         className="p-2 rounded hover:bg-white/20 text-white"
@@ -50,13 +50,13 @@ export function ProfileNameFormDrawer({ open, onClose, onSubmit, isSubmitting = 
                 })}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                            <label className="block text-sm font-medium mb-1">Nouveau nom du compte</label>
+                            <label className="block text-sm font-medium mb-1">Nouvelle photo de profil</label>
                             <Input
                                 type="text"
                                 name="name"
                                 value={values.name || ""}
                                 onChange={handleChange}
-                                placeholder="Nouveau nom du compte"
+                                placeholder="Nouvelle photo de profil"
                             />
                         </div>
 
