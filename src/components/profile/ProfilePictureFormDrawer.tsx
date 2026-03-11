@@ -4,22 +4,22 @@ import { Input } from "../ui/input";
 import { useRef } from "react";
 import { User } from "@/types/user";
 import { X } from "lucide-react";
-import { useProfilePasswordForm } from "@/hooks/useProfilePasswordForm";
+import { useProfileNameForm } from "@/hooks/useProfileNameForm";
 
-type ProfilePasswordFormDrawerProps = {
+type ProfileNameFormDrawerProps = {
     open: boolean;
     onClose: () => void;
     onSubmit: (data: Partial<User>, imageFile?: File) => void;
     isSubmitting?: boolean;
 };
 
-export function ProfilePasswordFormDrawer({ open, onClose, onSubmit, isSubmitting = false, initialUser }: ProfilePasswordFormDrawerProps & { initialUser?: Partial<User> }){
+export function ProfileNameFormDrawer({ open, onClose, onSubmit, isSubmitting = false, initialUser }: ProfileNameFormDrawerProps & { initialUser?: Partial<User> }){
     const {
         values,
         handleChange,
         handleSubmit,
         resetForm,
-    } = useProfilePasswordForm(initialUser);
+    } = useProfileNameForm(initialUser);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -53,10 +53,10 @@ export function ProfilePasswordFormDrawer({ open, onClose, onSubmit, isSubmittin
                             <label className="block text-sm font-medium mb-1">Nouveau nom du compte</label>
                             <Input
                                 type="text"
-                                name="password"
+                                name="name"
                                 value={values.name || ""}
                                 onChange={handleChange}
-                                placeholder="Nouveau mot de passe"
+                                placeholder="Nouveau nom du compte"
                             />
                         </div>
 

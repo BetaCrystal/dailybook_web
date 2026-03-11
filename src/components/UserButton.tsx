@@ -19,6 +19,7 @@ import Link from 'next/link';
 import { ProfileDisplay, StatusText } from "@/components/profile/ProfileDisplay";
 import { useUserContext } from "@/context/UserContext";
 import { useProfileNameFormDrawer } from '@/context/ProfileNameFormDrawerContext';
+import { useProfilePasswordFormDrawer } from '@/context/ProfilePasswordFormDrawerContext';
 
 type Panel = 'main' | 'profil' | 'settings';
 
@@ -31,6 +32,7 @@ export default function UserButton() {
         const containerRef = useRef<HTMLDivElement>(null);
 
         const { openNameDrawer: openNameDrawerForm } = useProfileNameFormDrawer();
+        const { openPasswordDrawer: openPasswordDrawerForm } = useProfilePasswordFormDrawer();
 
         // Reset to main panel when popover closes
         useEffect(() => {
@@ -67,6 +69,9 @@ export default function UserButton() {
         // Ouvre le drawer pour édition via le context
         const handleEditName = () => {
                 openNameDrawerForm({ initialUser: user.user });
+        };
+        const handleEditPassword = () => {
+                openPasswordDrawerForm({ initialUser: user.user });
         };
 
         return (
@@ -171,16 +176,14 @@ export default function UserButton() {
                                                                 Changer le nom
                                                         </button>
 
-                                                        <Link
-                                                                href="/profile/password"
-                                                                onClick={() => setOpen(false)}
-                                                                className={`flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-accent transition-colors ${
-                                                                        pathname === '/profile/password' ? 'bg-accent text-primary' : ''
-                                                                }`}
+                                                        <button
+                                                                onClick={handleEditPassword}
+                                                                className={`flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-accent transition-colorsbg-accent text-primary
+                                                                `}
                                                         >
                                                                 <KeyRound className="h-4 w-4" />
                                                                 Changer le mot de passe
-                                                        </Link>
+                                                        </button>
                                                 </div>
                                         </div>
 

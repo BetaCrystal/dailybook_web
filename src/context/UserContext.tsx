@@ -25,7 +25,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         await mutate();
       } catch (err: any) {
         Sentry.captureException(err);
-        throw new Error(err?.message || "Erreur lors de la modification de l'animal");
+        throw new Error(err?.message || "Erreur lors de la modification de l'utilisateur");
       }
     };
 
