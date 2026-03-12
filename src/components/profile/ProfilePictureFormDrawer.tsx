@@ -31,7 +31,7 @@ export function ProfilePictureFormDrawer({ open, onClose, onSubmit, isSubmitting
 
     return(
         <Dialog open={open} onOpenChange={handleClose}>
-            <DialogContent showCloseButton={false} className="max-w-[1200px] w-[90vw] h-[90vh] rounded-2xl p-0 overflow-hidden flex flex-col">
+            <DialogContent showCloseButton={false} className="max-w-[800px] w-[70vw] h-[40vh] rounded-2xl p-0 overflow-hidden flex flex-col">
                 <DialogHeader className="px-6 py-4 flex flex-row items-center justify-between">
                     <DialogTitle>Modifier la photo de profil</DialogTitle>
                     <Button
@@ -52,9 +52,9 @@ export function ProfilePictureFormDrawer({ open, onClose, onSubmit, isSubmitting
                             <div>
                             <label className="block text-sm font-medium mb-1">Nouvelle photo de profil</label>
                             <Input
-                                type="text"
+                                type="image"
                                 name="name"
-                                value={values.name || ""}
+                                value={values.image || ""}
                                 onChange={handleChange}
                                 placeholder="Nouvelle photo de profil"
                             />

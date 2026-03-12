@@ -31,7 +31,7 @@ export function ProfileNameFormDrawer({ open, onClose, onSubmit, isSubmitting = 
 
     return(
         <Dialog open={open} onOpenChange={handleClose}>
-            <DialogContent showCloseButton={false} className="max-w-[1200px] w-[90vw] h-[90vh] rounded-2xl p-0 overflow-hidden flex flex-col">
+            <DialogContent showCloseButton={false} className="max-w-[800px] w-[70vw] h-[40vh] rounded-2xl p-0 overflow-hidden flex flex-col">
                 <DialogHeader className="px-6 py-4 flex flex-row items-center justify-between">
 					<DialogTitle>Modifier le nom du compte</DialogTitle>
                     <Button

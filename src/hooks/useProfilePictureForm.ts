@@ -26,7 +26,7 @@ export function useProfilePictureForm(initial: Partial<User> = {}) {
 
   const validate = (vals: Partial<User>) => {
     const errs: Record<string, string> = {};
-    if (!vals.name) errs.name = "Le nom est requis";
+    if (!vals.imageSigned) errs.name = "L'image est requise";
     return errs;
   };
 

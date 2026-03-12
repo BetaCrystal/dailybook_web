@@ -31,7 +31,7 @@ export function ProfilePasswordFormDrawer({ open, onClose, onSubmit, isSubmittin
 
     return(
         <Dialog open={open} onOpenChange={handleClose}>
-            <DialogContent showCloseButton={false} className="max-w-[1200px] w-[90vw] h-[90vh] rounded-2xl p-0 overflow-hidden flex flex-col">
+            <DialogContent showCloseButton={false} className="max-w-[900px] w-[70vw] h-[40vh] rounded-2xl p-0 overflow-hidden flex flex-col">
                 <DialogHeader className="px-6 py-4 flex flex-row items-center justify-between">
                     <DialogTitle>Modifier le mot de passe</DialogTitle>
                     <Button
@@ -50,6 +50,16 @@ export function ProfilePasswordFormDrawer({ open, onClose, onSubmit, isSubmittin
                 })}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
+                            <label className="block text-sm font-medium mb-1">Ancien mot de passe</label>
+                            <Input
+                                type="text"
+                                name="expotoken"
+                                value={values.expotoken || ""}
+                                onChange={handleChange}
+                                placeholder="Ancien mot de passe"
+                            />
+                        </div>
+                        <div>
                             <label className="block text-sm font-medium mb-1">Nouveau mot de passe</label>
                             <Input
                                 type="text"
