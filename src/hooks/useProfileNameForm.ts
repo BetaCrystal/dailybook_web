@@ -16,11 +16,7 @@ export function useProfileNameForm(initial: Partial<User> = {}) {
     });
   }, [initial]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setValues((v) => ({ ...v, [e.target.name]: e.target.value }));
-  };
-
-  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLInputElement>) => {
     setValues((v) => ({ ...v, [e.target.name]: e.target.value }));
   };
 
@@ -46,7 +42,6 @@ export function useProfileNameForm(initial: Partial<User> = {}) {
     values,
     errors,
     handleChange,
-    handleTextareaChange,
     handleSubmit,
     resetForm,
     setValues,

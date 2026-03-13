@@ -16,6 +16,7 @@ type ProfileNameFormDrawerProps = {
 export function ProfileNameFormDrawer({ open, onClose, onSubmit, isSubmitting = false, initialUser }: ProfileNameFormDrawerProps & { initialUser?: Partial<User> }){
     const {
         values,
+        errors,
         handleChange,
         handleSubmit,
         resetForm,
@@ -58,6 +59,7 @@ export function ProfileNameFormDrawer({ open, onClose, onSubmit, isSubmitting = 
                                 onChange={handleChange}
                                 placeholder="Nouveau nom du compte"
                             />
+                            {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
                         </div>
 
                     </div>
