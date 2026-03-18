@@ -27,7 +27,7 @@ export const addUser = async (user: User) => {
 };
 
 export const updateUser = async (id: string, user: Partial<User>) => {
-    const res = await apiClient.put(`/user/${id}`, user);
+    const res = await apiClient.put(`/modifyUserName/${id}`, user);
     return res.data;
 };
 
