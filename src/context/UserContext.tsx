@@ -10,7 +10,7 @@ type UserContextType = {
   user: User | undefined;
   isLoading: boolean;
   isError: any;
-  updateUser: (id: string, user: Partial<User>) => Promise<void>;
+  updateUser: (id: number, user: Partial<User>) => Promise<void>;
   refresh: () => void;
 };
 
@@ -19,7 +19,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const { user, isLoading, isError, mutate } = useCurrentUser();
 
-  const updateUser = async (id: string, user: Partial<User>) => {
+  const updateUser = async (id: number, user: Partial<User>) => {
       try {
         await userService.updateUser(id, user);
         await mutate();

@@ -12,8 +12,8 @@ export function ProfileNameFormDrawerWrapper() {
   async function handleSubmit(data: Partial<User>) {
     try {
       // Création ou modification
-      if (drawer.initialUser?.uid) {
-        await updateUser(drawer.initialUser?.uid, { ...data});
+      if (drawer.initialUser?.id) {
+        await updateUser(drawer.initialUser?.id, { ...data});
         toast.success("Nom d'utilisateur modifié avec succès.");
       }
       refresh();

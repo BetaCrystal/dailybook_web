@@ -5,7 +5,7 @@ export async function PUT(req: Request, context: { params: any }) {
     const { id } = await context.params;
     try {
         const body = await req.json();
-        const data = await apiBack(`user/${id}`, 'PUT', {...body, id: String(id)});
+        const data = await apiBack(`user/${id}`, 'PUT', {...body, id: Number(id)});
         return Response.json(data);
     } catch (error: any) {
         const status = getStatusFromError(error);

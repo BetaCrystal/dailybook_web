@@ -16,6 +16,7 @@ export const getUser = async (): Promise<User> => {
         uid: resInternal.data.uid,
         isPremium: resExternal.data.libelle?.toLowerCase() === 'premium',
         timezone: timezone,
+        id: resExternal.data.id,
     }
 
     return user;
@@ -26,7 +27,7 @@ export const addUser = async (user: User) => {
     return res.data;
 };
 
-export const updateUser = async (id: string, user: Partial<User>) => {
+export const updateUser = async (id: number, user: Partial<User>) => {
     const res = await apiClient.put(`/user/${id}`, user);
     return res.data;
 };

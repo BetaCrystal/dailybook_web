@@ -8,6 +8,7 @@ export type User = {
   timezone: string;
   isPremium: boolean;
   image?: string;
+  id: number;
 
   imageSigned?: ImageSigned;
 };
