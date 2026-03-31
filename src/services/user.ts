@@ -16,7 +16,7 @@ export const getUser = async (): Promise<User> => {
         uid: resInternal.data.uid,
         isPremium: resExternal.data.libelle?.toLowerCase() === 'premium',
         timezone: timezone,
-        id: resExternal.data.id,
+        id: resInternal.data.id,
     }
 
     return user;

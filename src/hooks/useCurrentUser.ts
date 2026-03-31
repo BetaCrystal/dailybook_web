@@ -12,6 +12,7 @@ export function useCurrentUser() {
     isLoading,
     isError: error,
     isPremium: data?.isPremium || false,
+    id: data?.id,
     mutate,
   };
 }
